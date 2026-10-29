@@ -1,0 +1,27 @@
+/* Colours as tokens, light and dark; every text colour meets WCAG 2.2 AA (4.5:1) on its background - the browser
+   test checks it in both schemes. No inline styles anywhere (the CSP forbids them): spacing goes through classes. */
+:root {
+  --bg: #fffcf0; --card: #f2f0e5; --text: #100f0f; --muted: #64635e; --accent: #205ea6; --line: #e6e4d9;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root { --bg: #100f0f; --card: #1c1b1a; --text: #cecdc3; --muted: #878580; --accent: #66a0c8; --line: #282726;
+    color-scheme: dark; }
+}
+* { box-sizing: border-box; }
+body { margin: 0; font: 16px/1.5 system-ui, sans-serif; background: var(--bg); color: var(--text); }
+a { color: var(--accent); }
+.wrap { max-width: 960px; margin: 0 auto; padding: 0 16px; }
+header { border-bottom: 1px solid var(--line); padding: 12px 0; }
+.brand { font-weight: 700; text-decoration: none; }
+table { border-collapse: collapse; width: 100%; }
+th, td { text-align: left; padding: 8px; border-bottom: 1px solid var(--line); }
+.sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+/* Phones: tables stack, each cell named by its data-label. */
+@media (max-width: 600px) {
+  thead { display: none; }
+  tr, td { display: block; }
+  td::before { content: attr(data-label) ": "; color: var(--muted); }
+}
+textarea { display: block; width: 100%; margin: 4px 0 16px; font: inherit; color: var(--text); background: var(--card);
+  border: 1px solid var(--muted); border-radius: 6px; padding: 8px; }

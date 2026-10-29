@@ -1,0 +1,2 @@
+# A release must be a week old before pnpm installs it (minutes): time for a compromised one to be pulled.
+minimumReleaseAge: 10080
