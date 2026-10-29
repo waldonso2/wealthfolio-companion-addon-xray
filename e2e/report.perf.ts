@@ -3,7 +3,9 @@
 import { test } from "@playwright/test";
 import { appendFileSync, readdirSync, readFileSync, writeFileSync } from "node:fs";
 import { gzipSync } from "node:zlib";
-import { wordCounts } from "../src/words";
+import type { Index, Line } from "../src/contract";
+import { compute } from "../src/model";
+import { defaults } from "../src/settings";
 import { PAGES } from "./pages";
 
 const rows: string[][] = [];
@@ -70,11 +72,23 @@ test("Core Web Vitals of every page (phone)", async ({ browser }) => {
 });
 
 test("bundle size and core logic", () => {
-  const js = readdirSync("dist/assets").filter((f) => f.endsWith(".js"));
-  const bundle = Buffer.concat(js.map((f) => readFileSync(`dist/assets/${f}`)));
-  record("Paket", "JavaScript, gzip", gzipSync(bundle).length / 1024, "KiB", 170, "Budget für schnelle Mobilnetze");
-  const text = Array.from({ length: 1_000_000 }, (_, i) => `wort${i % 5000}`).join(" ");
+  const addon = readFileSync("dist/addon.js");
+  record("Paket", "dist/addon.js, gzip", gzipSync(addon).length / 1024, "KiB", 50, "eigenes Budget");
+  const js = readdirSync("dist/harness/assets").filter((f) => f.endsWith(".js"));
+  const bundle = Buffer.concat(js.map((f) => readFileSync(`dist/harness/assets/${f}`)));
+  record("Paket", "Testseite mit React, gzip", gzipSync(bundle).length / 1024, "KiB", 170, "Budget für schnelle Mobilnetze");
+  // 10 funds of 3,500 lines each (#146: under 500 ms), half of the companies shared between funds.
+  const lines = new Map<string, Line[]>();
+  const index = { isins: {}, funds: {}, missing: [] } as unknown as Index;
+  const positions = [];
+  for (let f = 0; f < 10; f++) {
+    const id = `f${f}`;
+    lines.set(id, Array.from({ length: 3500 }, (_, i): Line => [
+      `XS${String(i < 1750 ? i : f * 10000 + i).padStart(10, "0")}`, `Firma ${i}`, String(1 / 3600), "US", "IT", "USD"]));
+    (index.funds as Record<string, unknown>)[id] = { name: id };
+    positions.push({ id, name: id, currency: "EUR", value: 1000 * (f + 1) });
+  }
   const t = performance.now();
-  wordCounts(text);
-  record("Kern", "wordCounts über 1 Mio. Wörter", performance.now() - t, "ms", 1000, "Nielsen 1 s");
+  compute({ kind: "ok", index, lines, updating: [] }, { positions, cash: new Map(), base: "EUR", asOf: "" }, defaults());
+  record("Kern", "X-Ray: 10 Fonds × 3.500 Zeilen", performance.now() - t, "ms", 500, "#146");
 });

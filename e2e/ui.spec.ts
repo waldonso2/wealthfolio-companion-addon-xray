@@ -24,6 +24,10 @@ for (const colorScheme of ["light", "dark"] as const) {
           if (r.status() >= 400) found.push(`${r.status()} ${r.url()}`);
         });
         await page.goto(path);
+        // The demo data loads asynchronously; every folded card is opened so axe checks its content too.
+        await page.locator("h1").waitFor();
+        await page.waitForFunction(() => !document.querySelector('[role="status"]'));
+        await page.evaluate(() => document.querySelectorAll("details").forEach((d) => (d.open = true)));
         const { violations } = await new AxeBuilder({ page }).analyze();
         found.push(...violations.map((v) => `${v.id}: ${v.nodes.map((n) => n.target.join(" ")).join(", ")}`));
         if (name === "phone" && (await page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth)))

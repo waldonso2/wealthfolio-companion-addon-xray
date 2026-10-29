@@ -1,24 +1,37 @@
-# PLATZHALTER: Projektname
+# X-Ray für Wealthfolio
 
-PLATZHALTER: was das Projekt macht, in zwei Sätzen.
+Zeigt in [Wealthfolio](https://wealthfolio.app), was in deinen ETFs steckt: jede Aktie einmal über alle Konten, mit ihrem Anteil am Depot, wie stark sich deine ETFs überschneiden und wo Klumpenrisiken liegen (eine Aktie, ein Land, ein Sektor, Fremdwährung, Bargeld auf einem Konto).
 
-Aus der Vorlage [`template-ts-react`](https://github.com/waldonso2/template-ts-react) des
-[quality-kit](https://github.com/waldonso2/quality-kit): Sicherheit, Barrierefreiheit und Leistung werden in der CI
-geprüft, die Kennzahlen stehen in [`KENNZAHLEN.md`](KENNZAHLEN.md).
+Die Fondslisten holt das Addon nicht selbst: Es **geht nicht ins Netz**. Sie kommen vom [Wealthfolio Broker Sync](https://github.com/waldonso2/wealthfolio-broker-sync-service), der sie bei den Anbietern abruft und in Wealthfolio ablegt. Die Werte deiner Positionen liest das Addon direkt aus Wealthfolio. Beträge verlassen Wealthfolio nie.
 
-## Nach „Use this template“ ersetzen
+```mermaid
+flowchart LR
+  A[ETF-Anbieter<br/>iShares, Xtrackers, …] -->|Positionslisten| S[Broker Sync<br/>Container]
+  S -->|Fondslisten in den Addon-Speicher| W[(Wealthfolio)]
+  W -->|Listen + Werte der Positionen| X[X-Ray-Addon<br/>im Browser]
+```
 
-- [ ] `PLATZHALTER` in `README.md`, `CLAUDE.md`, `KENNZAHLEN.md`; `name` in `package.json`, `<title>` in `index.html`
-- [ ] die Beispiel-Logik (`src/words.ts`) und die Startseite (`src/App.tsx`)
-- [ ] der Produktionsserver sendet die Header aus `vite.config.ts` (`SECURITY_HEADERS`)
-- [ ] die Einstellungen aus [`SETUP.md`](https://github.com/waldonso2/quality-kit/blob/main/SETUP.md) setzen
+## Installation
+
+1. Wealthfolio **3.11** oder neuer.
+2. Im Broker Sync auf der Seite *Dienste* **X-Ray in Wealthfolio** einschalten. Nach dem nächsten Abruf liegen die Listen in Wealthfolio.
+3. Die Datei `wealthfolio-companion-addon-xray.zip` aus dem [neuesten Release](https://github.com/waldonso2/wealthfolio-companion-addon-xray/releases/latest) laden und in Wealthfolio unter *Einstellungen → Add-ons → Install from File* installieren.
+
+Das Addon fragt nach drei Rechten: Konten und Positionen lesen, eine Seite in der Seitenleiste. Es schreibt nichts in Wealthfolio außer den eigenen Einstellungen (Grenzen der Klumpenrisiken, „Bewusst so“).
 
 ## Entwickeln
 
 ```bash
 pnpm install
-pnpm dev                                  # Entwicklungsserver
-pnpm type-check && pnpm lint && pnpm test:coverage
-pnpm build && pnpm exec playwright install chromium && pnpm test:ui   # jede Seite im Browser
-pnpm perf                                 # Performance-Bericht (perf-report.md), nach pnpm build
+pnpm type-check && pnpm lint && pnpm test:coverage   # Tests, auch gegen die Rechenfälle des Dienstes
+pnpm build && pnpm test:ui                           # Testseite mit Beispieldaten im Browser (axe, CSP, Handy)
+pnpm bundle                                          # dist/wealthfolio-companion-addon-xray.zip
 ```
+
+`pnpm dev` zeigt die Seite mit erfundenen Beispieldaten ohne Wealthfolio. Wie Dienst und Addon die Daten teilen, steht in [`contract/xray/README.md`](contract/xray/README.md). Die Kopie im Dienst ist maßgeblich.
+
+Entstanden am Handy, im Gespräch mit Claude.
+
+## Lizenz
+
+MIT

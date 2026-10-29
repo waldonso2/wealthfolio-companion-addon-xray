@@ -16,6 +16,7 @@ wird gemessen und auf der Zusammenfassungsseite des CI-Laufs gezeigt (Schritt `p
 | Bekannte Lücken in dem, was ausgeliefert wird | 0 | `pnpm audit --prod`, Dependency Review | Jobs `ci`, `dependency-review` | blockierend |
 | Abhängigkeiten | nur aus `pnpm-lock.yaml` (`--frozen-lockfile`), Versionen ≥ 7 Tage alt | eigene Regel (`minimumReleaseAge`) | Job `ci` | blockierend |
 | Geheimnisse im Repository | 0 | gitleaks | Job `secrets` | blockierend |
+| Netzanfragen des Addons | 0 (keine Berechtigung `network`) | eigene Regel | `manifest.json`, CSP der Testseite (`connect-src 'self'`) | blockierend |
 | Sicherheits-Header, CSP ohne `unsafe-inline` | gesetzt | OWASP Secure Headers | `vite.config.ts` (`SECURITY_HEADERS`, auch für den Produktionsserver), Browser-Test | blockierend |
 | Sicherheit des Repositorys | ≥ 7 von 10 | OpenSSF Scorecard | `scorecard.yml` | Bericht |
 | Zeit bis zur Behebung einer Lücke | kritisch ≤ 7 Tage, hoch ≤ 30 Tage | übliche Fristen | Dependabot, Advisories | Leitlinie |
@@ -45,7 +46,8 @@ Gemessen in `e2e/report.perf.ts` (`pnpm perf`) auf dem CI-Runner; entscheidend i
 | Übertragene Daten, größte Seite | ≤ 500 KiB | Seitengewicht | Bericht |
 | JavaScript, gzip | ≤ 170 KiB | Budget für schnelle Mobilnetze | Bericht |
 | Kernlogik (`wordCounts` über 1 Mio. Wörter) | ≤ 1 s | Nielsen 1 s | Bericht |
-| PLATZHALTER: die Kernoperation des Projekts | … | … | Bericht |
+| X-Ray rechnen: 10 Fonds × 3.500 Zeilen | ≤ 500 ms | #146 | `e2e/report.perf.ts` | Bericht |
+| Größe von `dist/addon.js` (gzip) | ≤ 50 KiB | eigenes Budget | `e2e/report.perf.ts` | Bericht |
 
 ## Wartbarkeit
 
