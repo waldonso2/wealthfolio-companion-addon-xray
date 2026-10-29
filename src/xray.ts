@@ -1,4 +1,4 @@
-// X-Ray: what the depot really holds - a port of the broker sync service's src/brokersync/xray.py (same rules, same
+// X-Ray: what the depot really holds - a port of Wealthfolio Companion's src/brokersync/xray.py (same rules, same
 // order of the results). contract/xray/cases.json is computed by the service; src/xray.test.ts checks this port
 // against it. Numbers are doubles: sums over a few thousand lines stay far below what is shown; EPS absorbs what a
 // decimal would have made exactly zero.

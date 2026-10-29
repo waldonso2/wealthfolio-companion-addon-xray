@@ -13,8 +13,8 @@ export const EN: Record<string, string> = {
     "What your ETFs hold - across all accounts, with the values from Wealthfolio.",
   "Lädt …": "Loading …",
   "Neu laden": "Reload",
-  "Noch keine Daten. Im Broker-Sync-Dienst auf der Seite „Dienste“ „X-Ray in Wealthfolio“ einschalten – nach dem nächsten Abruf stehen die Fondslisten hier.":
-    "No data yet. In the broker sync service, switch on \"X-Ray in Wealthfolio\" on the page \"Dienste\" - after the next fetch the funds' lists are here.",
+  "Noch keine Daten. In Wealthfolio Companion auf der Seite „Dienste“ „X-Ray in Wealthfolio“ einschalten – nach dem nächsten Abruf stehen die Fondslisten hier.":
+    "No data yet. In Wealthfolio Companion, switch on \"X-Ray in Wealthfolio\" on the page \"Dienste\" - after the next fetch the funds' lists are here.",
   "Die Daten stammen von einer neueren Version des Dienstes (Schema {schema}). Bitte das Addon aktualisieren.":
     "The data comes from a newer version of the service (schema {schema}). Please update the addon.",
   "Wealthfolio antwortet nicht: {error}": "Wealthfolio does not answer: {error}",
@@ -86,8 +86,8 @@ export const EN: Record<string, string> = {
   "Bitte eine Zahl von 0 bis 100 (Prozent) bzw. 0 bis 1.000.000.000 eintragen.":
     "Please enter a number from 0 to 100 (percent) or 0 to 1,000,000,000.",
   "Was wird berechnet?": "What is computed?",
-  "Anteil am Depot: Wert der Position mal Gewicht der Aktie im Fonds, über alle Positionen addiert. Was die Gewichte eines Fonds offen lassen, steht als „nicht zugeordnet“ – nichts wird hochgerechnet. Überschneidung zweier ETFs: Summe des jeweils kleineren Gewichts jeder Aktie, die beide halten. Eigener Beitrag: der Teil eines ETFs, den keine andere Position mitbringt. Effektive Titelzahl: so vielen gleich gewichteten Aktien entspricht das Depot. Die Fondslisten legt der Broker-Sync-Dienst in Wealthfolio ab; dieses Addon geht nicht ins Netz.":
-    "Share of the depot: the position's value times the stock's weight in the fund, added up over all positions. What a fund's weights leave open is \"unassigned\" - nothing is scaled up. Overlap of two ETFs: the sum of the smaller weight of every stock both hold. Own contribution: the part of an ETF no other position brings. Effective number of stocks: how many equally weighted stocks the depot is worth. The broker sync service stores the funds' lists in Wealthfolio; this addon makes no network requests.",
+  "Anteil am Depot: Wert der Position mal Gewicht der Aktie im Fonds, über alle Positionen addiert. Was die Gewichte eines Fonds offen lassen, steht als „nicht zugeordnet“ – nichts wird hochgerechnet. Überschneidung zweier ETFs: Summe des jeweils kleineren Gewichts jeder Aktie, die beide halten. Eigener Beitrag: der Teil eines ETFs, den keine andere Position mitbringt. Effektive Titelzahl: so vielen gleich gewichteten Aktien entspricht das Depot. Die Fondslisten legt Wealthfolio Companion in Wealthfolio ab; dieses Addon geht nicht ins Netz.":
+    "Share of the depot: the position's value times the stock's weight in the fund, added up over all positions. What a fund's weights leave open is \"unassigned\" - nothing is scaled up. Overlap of two ETFs: the sum of the smaller weight of every stock both hold. Own contribution: the part of an ETF no other position brings. Effective number of stocks: how many equally weighted stocks the depot is worth. Wealthfolio Companion stores the funds' lists in Wealthfolio; this addon makes no network requests.",
 };
 
 export function translate(lang: Lang, key: string, params: Record<string, string | number> = {}): string {

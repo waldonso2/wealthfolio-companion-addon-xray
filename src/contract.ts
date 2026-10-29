@@ -1,4 +1,4 @@
-// The data the broker sync service leaves in this addon's storage (contract/xray/README.md, schema 1). Read only: the
+// The data Wealthfolio Companion leaves in this addon's storage (contract/xray/README.md, schema 1). Read only: the
 // addon never writes a key of the service (they start with "xray:").
 
 export const ADDON_ID = "broker-sync-xray";

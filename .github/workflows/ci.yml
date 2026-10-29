@@ -50,9 +50,9 @@ jobs:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           persist-credentials: false
-      - name: the data contract matches the broker sync service's (leading) copy (contract/xray/README.md)
+      - name: the data contract matches the Wealthfolio Companion's (leading) copy (contract/xray/README.md)
         run: |
-          base=https://raw.githubusercontent.com/waldonso2/wealthfolio-broker-sync-service/main/contract/xray
+          base=https://raw.githubusercontent.com/waldonso2/wealthfolio-companion/main/contract/xray
           for f in cases.json README.md; do
             curl -fsSL "$base/$f" -o "/tmp/$f"
             diff -u "/tmp/$f" "contract/xray/$f" || { echo "::error::contract/xray/$f differs from the service's copy - copy it from there."; exit 1; }
