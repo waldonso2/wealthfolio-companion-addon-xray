@@ -1,7 +1,7 @@
 # X-Ray addon for Wealthfolio
 
-A Wealthfolio addon (≥ 3.11): ETF look-through, computed in the browser from the funds' lists the broker sync
-service (`waldonso2/wealthfolio-broker-sync-service`) stores in this addon's storage, and the positions' values read
+A Wealthfolio addon (≥ 3.11): ETF look-through, computed in the browser from the funds' lists Wealthfolio
+Companion (`waldonso2/wealthfolio-companion`) stores in this addon's storage, and the positions' values read
 live through the SDK. Spec: waldonso2/wealthfolio-importer-addon#146. Docs and UI texts German (UI also English),
 CLAUDE.md, code and comments English. Node 24, pnpm 11 (`.tool-versions`). From `waldonso2/template-ts-react`.
 

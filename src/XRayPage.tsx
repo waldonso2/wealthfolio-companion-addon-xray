@@ -53,7 +53,7 @@ function Body({ data, t, lang, storage, setData }: { data: Data; t: T; lang: "de
   if ("error" in data) return <p role="alert" className="xr-error">{t("Wealthfolio antwortet nicht: {error}", { error: data.error })}</p>;
   const { store, depot, settings, at } = data;
   if (store.kind === "none")
-    return <p className="xr-card">{t("Noch keine Daten. Im Broker-Sync-Dienst auf der Seite „Dienste“ „X-Ray in Wealthfolio“ einschalten – nach dem nächsten Abruf stehen die Fondslisten hier.")}</p>;
+    return <p className="xr-card">{t("Noch keine Daten. In Wealthfolio Companion auf der Seite „Dienste“ „X-Ray in Wealthfolio“ einschalten – nach dem nächsten Abruf stehen die Fondslisten hier.")}</p>;
   if (store.kind === "newer")
     return <p role="alert" className="xr-card">{t("Die Daten stammen von einer neueren Version des Dienstes (Schema {schema}). Bitte das Addon aktualisieren.", { schema: store.schema })}</p>;
   if (!depot.positions.length) return <p className="xr-card">{t("Keine Positionen in Wealthfolio.")}</p>;
@@ -98,7 +98,7 @@ function Report({ store, depot, settings, at, t, lang, onSettings }: {
       <LimitsForm settings={settings} t={t} onSettings={onSettings} />
       <details className="xr-card">
         <summary><h2>{t("Was wird berechnet?")}</h2></summary>
-        <p>{t("Anteil am Depot: Wert der Position mal Gewicht der Aktie im Fonds, über alle Positionen addiert. Was die Gewichte eines Fonds offen lassen, steht als „nicht zugeordnet“ – nichts wird hochgerechnet. Überschneidung zweier ETFs: Summe des jeweils kleineren Gewichts jeder Aktie, die beide halten. Eigener Beitrag: der Teil eines ETFs, den keine andere Position mitbringt. Effektive Titelzahl: so vielen gleich gewichteten Aktien entspricht das Depot. Die Fondslisten legt der Broker-Sync-Dienst in Wealthfolio ab; dieses Addon geht nicht ins Netz.")}</p>
+        <p>{t("Anteil am Depot: Wert der Position mal Gewicht der Aktie im Fonds, über alle Positionen addiert. Was die Gewichte eines Fonds offen lassen, steht als „nicht zugeordnet“ – nichts wird hochgerechnet. Überschneidung zweier ETFs: Summe des jeweils kleineren Gewichts jeder Aktie, die beide halten. Eigener Beitrag: der Teil eines ETFs, den keine andere Position mitbringt. Effektive Titelzahl: so vielen gleich gewichteten Aktien entspricht das Depot. Die Fondslisten legt Wealthfolio Companion in Wealthfolio ab; dieses Addon geht nicht ins Netz.")}</p>
       </details>
     </>
   );

@@ -1,5 +1,9 @@
 # Changelog
 
+## 3.11.3
+
+- The broker sync service is now called Wealthfolio Companion: the texts, README and links name it so (its repository is `waldonso2/wealthfolio-companion`). The storage it writes is the same, nothing to do.
+
 ## 3.11.2
 
 - Looks like Wealthfolio: its font (the one picked in Wealthfolio, Classic: JetBrains Mono), its type scale in rem (follows Wealthfolio's text size), its cards, pill buttons, fields and sage heatmap colours.

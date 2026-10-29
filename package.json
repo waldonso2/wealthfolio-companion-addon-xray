@@ -1,7 +1,7 @@
 {
   "name": "wealthfolio-companion-addon-xray",
   "private": true,
-  "version": "3.11.2",
+  "version": "3.11.3",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -40,6 +40,6 @@
     "vite": "^8.3.4",
     "vitest": "^5.0.3"
   },
-  "description": "X-Ray for Wealthfolio: ETF look-through with the funds' lists the broker sync service stores",
+  "description": "X-Ray for Wealthfolio: ETF look-through with the funds' lists Wealthfolio Companion stores",
   "license": "MIT"
 }
