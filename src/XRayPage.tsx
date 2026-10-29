@@ -137,36 +137,38 @@ function Matrix({ model, t, f }: { model: Model; t: T; f: F }) {
   return (
     <details className="xr-card">
       <summary><h2>{t("Gesamt: Aktien über alle Positionen")}</h2></summary>
-      <label htmlFor={id}>{t("Zeigen")}</label>{" "}
-      <select id={id} value={choice} onChange={(e) => setChoice(e.target.value)}>
-        {TOPS.map((v) => (
-          <option key={v} value={v}>{v === "all" ? t("alle") : t("Top {n}", { n: v })}</option>
-        ))}
-      </select>
+      <div className="xr-toolbar">
+        <label htmlFor={id}>{t("Zeigen")}</label>
+        <select id={id} value={choice} onChange={(e) => setChoice(e.target.value)}>
+          {TOPS.map((v) => (
+            <option key={v} value={v}>{v === "all" ? t("alle") : t("Top {n}", { n: v })}</option>
+          ))}
+        </select>
+      </div>
       {waiting.length > 0 && <p className="xr-muted">{t("Noch ohne Liste (zählen als eine Position): {names}", { names: waiting.join(", ") })}</p>}
       {/* eslint-disable-next-line jsx-a11y/no-noninteractive-tabindex -- a region that scrolls sideways must be reachable by keyboard (WCAG 2.1.1, axe scrollable-region-focusable) */}
       <div className="xr-scroll" role="region" aria-label={t("Aktien über alle Positionen, größte zuerst")} tabIndex={0}>
-        <table>
+        <table className="xr-matrix">
           <caption className="sr-only">{t("Aktien über alle Positionen, größte zuerst")}</caption>
           <thead>
             <tr>
               <th scope="col">{t("Aktie")}</th>
-              <th scope="col">{t("Anteil")}</th>
-              {model.columns.map((h) => <th scope="col" key={h.id}>{h.name}</th>)}
-              {model.moreFunds && <th scope="col">{t("weitere ETFs")}</th>}
-              <th scope="col">{t("direkt")}</th>
-              <th scope="col">{t("Summe")}</th>
+              <th scope="col" className="xr-num">{t("Anteil")}</th>
+              {model.columns.map((h) => <th scope="col" className="xr-num" key={h.id}>{h.name}</th>)}
+              {model.moreFunds && <th scope="col" className="xr-num">{t("weitere ETFs")}</th>}
+              <th scope="col" className="xr-num">{t("direkt")}</th>
+              <th scope="col" className="xr-num">{t("Summe")}</th>
             </tr>
           </thead>
           <tbody>
             {rows.map((r) => (
               <tr key={r.row.key}>
-                <td data-label={t("Aktie")}>{r.row.name}{r.row.country && <span className="xr-muted"> · {r.row.country}</span>}</td>
-                <td data-label={t("Anteil")}>{f.pct2(r.row.share)}</td>
-                {model.columns.map((h, i) => <td key={h.id} data-label={h.name}>{r.columns[i] ? f.money(r.columns[i] as number) : "–"}</td>)}
-                {model.moreFunds && <td data-label={t("weitere ETFs")}>{r.others ? f.money(r.others) : "–"}</td>}
-                <td data-label={t("direkt")}>{r.direct ? f.money(r.direct) : "–"}</td>
-                <td data-label={t("Summe")}>{f.money(r.total)}</td>
+                <td className="xr-name" data-label={t("Aktie")}>{r.row.name}{r.row.country && <span className="xr-muted"> · {r.row.country}</span>}</td>
+                <td className="xr-num" data-label={t("Anteil")}>{f.pct2(r.row.share)}</td>
+                {model.columns.map((h, i) => <Amount key={h.id} label={h.name} value={r.columns[i]} f={f} />)}
+                {model.moreFunds && <Amount label={t("weitere ETFs")} value={r.others} f={f} />}
+                <Amount label={t("direkt")} value={r.direct} f={f} />
+                <td className="xr-num xr-total" data-label={t("Summe")}>{f.money(r.total)}</td>
               </tr>
             ))}
           </tbody>
@@ -174,6 +176,11 @@ function Matrix({ model, t, f }: { model: Model; t: T; f: F }) {
       </div>
     </details>
   );
+}
+
+/** An amount of the matrix; an empty one is "–" on wide screens and left out on phones. */
+function Amount({ label, value, f }: { label: string; value: number | null | undefined; f: F }) {
+  return <td className={value ? "xr-num" : "xr-num xr-empty"} data-label={label}>{value ? f.money(value) : "–"}</td>;
 }
 
 function Overlap({ model, t, f }: { model: Model; t: T; f: F }) {
@@ -189,13 +196,18 @@ function Overlap({ model, t, f }: { model: Model; t: T; f: F }) {
           <thead>
             <tr>
               <td />
-              {funds.map((h) => <th scope="col" key={h.id}>{h.name}</th>)}
+              {funds.map((h, i) => (
+                <th scope="col" key={h.id} title={h.name}>
+                  <span aria-hidden="true">{i + 1}</span>
+                  <span className="sr-only">{h.name}</span>
+                </th>
+              ))}
             </tr>
           </thead>
           <tbody>
             {funds.map((a, i) => (
               <tr key={a.id}>
-                <th scope="row">{a.name}</th>
+                <th scope="row"><span className="xr-idx" aria-hidden="true">{i + 1}</span>{a.name}</th>
                 {funds.map((b, j) => (
                   <td key={b.id} data-label={b.name} className={i === j ? "heat-self" : heat(cells[i][j])}>
                     {i === j ? "–" : f.pct(cells[i][j])}
@@ -256,16 +268,16 @@ function FundCard({ card, t, f }: { card: Model["funds"][number]; t: T; f: F }) 
         <thead>
           <tr>
             <th scope="col">{t("Aktie")}</th>
-            <th scope="col">{t("Gewicht")}</th>
-            <th scope="col">{t("Dein Anteil")}</th>
+            <th scope="col" className="xr-num">{t("Gewicht")}</th>
+            <th scope="col" className="xr-num">{t("Dein Anteil")}</th>
           </tr>
         </thead>
         <tbody>
           {lines.map((c, i) => (
             <tr key={`${c.key}-${i}`}>
-              <td data-label={t("Aktie")}>{c.name}</td>
-              <td data-label={t("Gewicht")}>{f.pct2(c.weight)}</td>
-              <td data-label={t("Dein Anteil")}>{f.money(h.value * c.weight)}</td>
+              <td>{c.name}</td>
+              <td className="xr-num">{f.pct2(c.weight)}</td>
+              <td className="xr-num">{f.money(h.value * c.weight)}</td>
             </tr>
           ))}
         </tbody>

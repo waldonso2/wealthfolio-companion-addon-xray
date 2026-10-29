@@ -1,5 +1,10 @@
 # Changelog
 
+## 3.11.2
+
+- Looks like Wealthfolio: its font (the one picked in Wealthfolio, Classic: JetBrains Mono), its type scale in rem (follows Wealthfolio's text size), its cards, pill buttons, fields and sage heatmap colours.
+- Phones: the overall matrix shows one block per stock (name and total, then each ETF's amount, empty ones left out) instead of cut-off lines; the fund lists keep their columns; the overlap heatmap numbers its columns and keeps the names in the first one.
+
 ## 3.11.1
 
 - Fix: works inside Wealthfolio's addon sandbox. The funds' checksums are computed without `crypto.subtle`, which the sandbox iframe doesn't have ("Cannot read properties of undefined (reading 'digest')").

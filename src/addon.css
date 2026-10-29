@@ -1,85 +1,132 @@
-/* X-Ray's look. Inside Wealthfolio the host's theme variables (--background, --foreground, --card, --border,
-   --muted-foreground, --primary …) win; the fallbacks are Flexoki like the service and keep every text colour at
-   WCAG 2.2 AA (4.5:1) in light and dark - the browser test checks them on the harness page. No inline styles. */
+/* X-Ray's look: Wealthfolio's own. Inside Wealthfolio the sandbox loads the host's globals.css and theme, so the
+   host's tokens win (--background, --card, --card-radius, --card-shadow, --button-radius, --control-height …), the
+   text inherits the font the user picked there (Classic: JetBrains Mono) and every size is rem, so Wealthfolio's
+   text size setting scales it. The fallbacks are Classic's (Flexoki) values for the harness page; they keep every
+   text colour at WCAG 2.2 AA (4.5:1) in light and dark - the browser test checks them. No inline styles. */
 :root {
-  --xr-fb-bg: #fffcf0; --xr-fb-card: #f2f0e5; --xr-fb-text: #100f0f; --xr-fb-muted: #5c5b56; --xr-fb-line: #dad8ce;
-  --xr-fb-primary: #100f0f; --xr-fb-on-primary: #fffcf0; --xr-fb-error: #af3029; --xr-fb-warn: #6e5400;
-  --xr-fb-ok: #4d6108;
-  --xr-h0: #f2f0e5; --xr-h1: #dde7f0; --xr-h2: #bcd2e6; --xr-h3: #92b6d6; --xr-h4: #5e8fbf; --xr-h5: #205ea6;
-  --xr-h-text: #100f0f; --xr-h-text-strong: #fffcf0;
+  --xr-fb-bg: #fffcf0; --xr-fb-card: #f7f4e8; --xr-fb-text: #100f0f; --xr-fb-muted: #5c5b56; --xr-fb-line: #e6e4d9;
+  --xr-fb-input: #e6e4d9; --xr-fb-primary: #100f0f; --xr-fb-on-primary: #fffcf0; --xr-fb-error: #af3029;
+  --xr-fb-warn: #6e5400; --xr-fb-ok: #4d6108; --xr-fb-heat: #8a9c57; --xr-heat-max: 75%;
 }
 @media (prefers-color-scheme: dark) {
   :root:not(.light) {
-    --xr-fb-bg: #100f0f; --xr-fb-card: #1c1b1a; --xr-fb-text: #cecdc3; --xr-fb-muted: #9f9d96; --xr-fb-line: #343331;
-    --xr-fb-primary: #cecdc3; --xr-fb-on-primary: #100f0f; --xr-fb-error: #e0614f; --xr-fb-warn: #d0a215;
-    --xr-fb-ok: #879a39;
-    --xr-h0: #1c1b1a; --xr-h1: #1f2a36; --xr-h2: #23364d; --xr-h3: #284566; --xr-h4: #2d5a86; --xr-h5: #4a82b6;
-    --xr-h-text: #cecdc3; --xr-h-text-strong: #fffcf0;
+    --xr-fb-bg: #100f0f; --xr-fb-card: #1c1b1a; --xr-fb-text: #cecdc3; --xr-fb-muted: #9f9d96; --xr-fb-line: #282726;
+    --xr-fb-input: #343331; --xr-fb-primary: #cecdc3; --xr-fb-on-primary: #100f0f; --xr-fb-error: #e0614f;
+    --xr-fb-warn: #d0a215; --xr-fb-ok: #879a39; --xr-fb-heat: #879a39; --xr-heat-max: 45%;
   }
 }
 :root.dark {
-  --xr-fb-bg: #100f0f; --xr-fb-card: #1c1b1a; --xr-fb-text: #cecdc3; --xr-fb-muted: #9f9d96; --xr-fb-line: #343331;
-  --xr-fb-primary: #cecdc3; --xr-fb-on-primary: #100f0f; --xr-fb-error: #e0614f; --xr-fb-warn: #d0a215;
-  --xr-fb-ok: #879a39;
-  --xr-h0: #1c1b1a; --xr-h1: #1f2a36; --xr-h2: #23364d; --xr-h3: #284566; --xr-h4: #2d5a86; --xr-h5: #4a82b6;
-  --xr-h-text: #cecdc3; --xr-h-text-strong: #fffcf0;
+  --xr-fb-bg: #100f0f; --xr-fb-card: #1c1b1a; --xr-fb-text: #cecdc3; --xr-fb-muted: #9f9d96; --xr-fb-line: #282726;
+  --xr-fb-input: #343331; --xr-fb-primary: #cecdc3; --xr-fb-on-primary: #100f0f; --xr-fb-error: #e0614f;
+  --xr-fb-warn: #d0a215; --xr-fb-ok: #879a39; --xr-fb-heat: #879a39; --xr-heat-max: 45%;
 }
+body { margin: 0; background: var(--background, var(--xr-fb-bg));
+  font-family: var(--font-mono, "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace); }
 .xr {
   --xr-bg: var(--background, var(--xr-fb-bg)); --xr-card: var(--card, var(--xr-fb-card));
   --xr-text: var(--foreground, var(--xr-fb-text)); --xr-muted: var(--muted-foreground, var(--xr-fb-muted));
-  --xr-line: var(--border, var(--xr-fb-line)); --xr-primary: var(--primary, var(--xr-fb-primary));
-  --xr-on-primary: var(--primary-foreground, var(--xr-fb-on-primary));
-  max-width: 1100px; margin: 0 auto; padding: 16px; color: var(--xr-text); background: var(--xr-bg);
-  font: 15px/1.5 Inter, ui-sans-serif, system-ui, sans-serif; overflow-wrap: anywhere;
+  --xr-line: var(--border, var(--xr-fb-line)); --xr-input: var(--input, var(--xr-fb-input));
+  --xr-primary: var(--primary, var(--xr-fb-primary)); --xr-on-primary: var(--primary-foreground, var(--xr-fb-on-primary));
+  --xr-heat: var(--heatmap-positive-high, var(--xr-fb-heat));
+  --xr-control: var(--control-height, 2.75rem);
+  max-width: 72rem; margin: 0 auto; padding: 1rem; color: var(--xr-text); background: var(--xr-bg);
+  font-size: 0.875rem; line-height: 1.25rem; overflow-wrap: anywhere; font-variant-numeric: tabular-nums;
 }
 .xr *, .xr *::before, .xr *::after { box-sizing: border-box; }
-.xr h1 { font-size: 26px; margin: 0; }
-.xr h2 { font-size: 17px; margin: 0; display: inline; }
-.xr h3 { font-size: 15px; margin: 0; display: inline; }
-.xr-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
-.xr-muted { color: var(--xr-muted); font-size: 13px; }
+.xr h1 { font-size: 1.125rem; line-height: 1.75rem; font-weight: 600; margin: 0; }
+.xr h2 { font-size: var(--card-title-size, 1.25rem); line-height: 1.75rem; font-weight: 600;
+  letter-spacing: var(--card-title-tracking, -0.025em); margin: 0; display: inline; }
+.xr h3 { font-size: 0.875rem; font-weight: 600; margin: 0; display: inline; }
+.xr-head { display: flex; align-items: center; justify-content: space-between; gap: 0.75rem; flex-wrap: wrap; }
+.xr-muted { color: var(--xr-muted); font-size: 0.75rem; line-height: 1rem; }
+p.xr-muted { margin: 0.25rem 0 0; }
 .xr-error { color: var(--destructive, var(--xr-fb-error)); }
-.xr-warn { color: var(--xr-fb-warn); }
-.xr-ok { color: var(--xr-fb-ok); }
-.xr-card { background: var(--xr-card); border: 1px solid var(--xr-line); border-radius: 10px; padding: 14px; margin: 14px 0; }
-.xr-fund { border-top: 1px solid var(--xr-line); padding: 10px 0; }
-.xr summary { cursor: pointer; padding: 4px 0; }
-.xr details[open] > summary { margin-bottom: 8px; }
-.xr-figures { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 8px 16px; margin: 8px 0; }
-.xr-figures dt { color: var(--xr-muted); font-size: 13px; }
-.xr-figures dd { margin: 0; font-weight: 600; font-variant-numeric: tabular-nums; }
-.xr table { border-collapse: collapse; width: 100%; font-variant-numeric: tabular-nums; }
-.xr th, .xr td { text-align: left; padding: 6px 8px; border-bottom: 1px solid var(--xr-line); vertical-align: top; }
+.xr-warn { color: var(--warning-subtle-foreground, var(--xr-fb-warn)); }
+.xr-ok { color: var(--success, var(--xr-fb-ok)); }
+.xr-card { background: var(--xr-card); border: 1px solid var(--card-border, var(--xr-line));
+  border-radius: var(--card-radius, 0.625rem); box-shadow: var(--card-shadow, 0 1px 2px 0 rgb(0 0 0 / 0.05));
+  padding: 1.5rem; margin: 1rem 0; }
+.xr-fund { border-top: 1px solid var(--xr-line); padding: 0.75rem 0; }
+.xr-fund:first-of-type { border-top: 0; }
+/* Folded cards: the title is the card header, a chevron on the right as in Wealthfolio's accordions. */
+.xr summary { cursor: pointer; list-style: none; display: flex; align-items: baseline; flex-wrap: wrap;
+  column-gap: 0.5rem; padding-right: 1.5rem; position: relative; }
+.xr summary::-webkit-details-marker { display: none; }
+.xr summary::after { content: ""; position: absolute; right: 0.25rem; top: 0.5rem; width: 0.5rem; height: 0.5rem;
+  border-right: 2px solid var(--xr-muted); border-bottom: 2px solid var(--xr-muted); transform: rotate(45deg);
+  transition: transform .15s; }
+.xr details[open] > summary::after { transform: rotate(-135deg); top: 0.75rem; }
+.xr details[open] > summary { margin-bottom: 1rem; }
+.xr-fund > summary { flex-direction: column; row-gap: 0.125rem; }
+.xr-figures { display: grid; grid-template-columns: repeat(auto-fit, minmax(9rem, 1fr)); gap: 1rem; margin: 1rem 0 0; }
+.xr-fund .xr-figures { margin: 0 0 1rem; }
+.xr-figures dt { color: var(--xr-muted); font-size: 0.75rem; line-height: 1rem; }
+.xr-figures dd { margin: 0.25rem 0 0; font-size: 1.125rem; line-height: 1.75rem; font-weight: 600; }
+.xr table { border-collapse: collapse; width: 100%; }
+.xr th { color: var(--xr-muted); font-weight: 500; font-size: 0.75rem; }
+.xr th, .xr td { text-align: left; padding: 0.5rem; border-bottom: 1px solid var(--xr-line); vertical-align: top; }
+.xr :is(th, td):first-child { padding-left: 0; }
+.xr :is(th, td):last-child { padding-right: 0; }
+.xr td.xr-num, .xr th.xr-num { text-align: right; white-space: nowrap; }
+.xr tbody tr:last-child td, .xr tbody tr:last-child th { border-bottom: 0; }
 .xr-scroll { overflow-x: auto; max-width: 100%; }
-.xr-heat td { text-align: center; color: var(--xr-h-text); }
-.heat-self { background: var(--xr-card); }
-.heat-0 { background: var(--xr-h0); } .heat-1 { background: var(--xr-h1); } .heat-2 { background: var(--xr-h2); }
-.heat-3 { background: var(--xr-h3); }
-.xr-heat .heat-4, .xr-heat .heat-5 { color: var(--xr-h-text-strong); }
-.heat-4 { background: var(--xr-h4); } .heat-5 { background: var(--xr-h5); }
-.xr-button { min-height: 40px; padding: 8px 16px; border-radius: 8px; border: 1px solid var(--xr-primary);
-  background: var(--xr-primary); color: var(--xr-on-primary); font: 500 14px inherit; cursor: pointer; }
-.xr-button.secondary { background: transparent; color: var(--xr-text); border-color: var(--xr-line); }
-.xr-button:disabled { opacity: .6; cursor: default; }
-.xr button:focus-visible, .xr input:focus-visible, .xr select:focus-visible, .xr summary:focus-visible {
-  outline: 2px solid var(--xr-primary); outline-offset: 2px; }
-.xr input, .xr select { min-height: 40px; padding: 6px 10px; border: 1px solid var(--xr-line); border-radius: 8px;
-  background: var(--xr-bg); color: var(--xr-text); font: inherit; }
+/* Overlap heatmap: Wealthfolio's sage ramp over the card, numbered columns, the names stay in the first column. */
+.xr table.xr-heat { width: auto; }
+.xr-heat th[scope=col] { text-align: center; min-width: 5rem; }
+.xr-heat th[scope=row] { color: var(--xr-text); font-weight: 500; font-size: 0.875rem; max-width: 14rem; position: sticky;
+  left: 0; background: var(--xr-card); }
+.xr-heat td { text-align: center; white-space: nowrap; border: 2px solid var(--xr-card); border-radius: 0.375rem; }
+.xr-idx { color: var(--xr-muted); margin-right: 0.375rem; }
+.heat-self { color: var(--xr-muted); }
+.heat-0 { background: var(--xr-card); }
+.heat-1 { background: color-mix(in srgb, var(--xr-heat) calc(var(--xr-heat-max) * 0.2), var(--xr-card)); }
+.heat-2 { background: color-mix(in srgb, var(--xr-heat) calc(var(--xr-heat-max) * 0.4), var(--xr-card)); }
+.heat-3 { background: color-mix(in srgb, var(--xr-heat) calc(var(--xr-heat-max) * 0.6), var(--xr-card)); }
+.heat-4 { background: color-mix(in srgb, var(--xr-heat) calc(var(--xr-heat-max) * 0.8), var(--xr-card)); }
+.heat-5 { background: color-mix(in srgb, var(--xr-heat) var(--xr-heat-max), var(--xr-card)); font-weight: 600; }
+/* Controls as Wealthfolio's: pill buttons, fields with the control radius, both var(--control-height) high. */
+.xr-button { min-height: var(--xr-control); padding: 0 1rem; border-radius: var(--button-radius, 9999px);
+  border: 1px solid var(--button-border, transparent); background: var(--xr-primary); color: var(--xr-on-primary);
+  font: inherit; font-size: 0.875rem; font-weight: var(--button-weight, 500); cursor: pointer; }
+.xr-button.secondary { background: var(--input-bg, var(--xr-bg)); color: var(--xr-text);
+  border-color: var(--xr-input); box-shadow: var(--button-outline-shadow, 0 1px 2px 0 rgb(0 0 0 / 0.05)); }
+.xr-button.secondary:hover { background: var(--accent, var(--xr-line)); }
+.xr-button:disabled { opacity: .5; cursor: default; }
+.xr button:focus-visible, .xr input:focus-visible, .xr select:focus-visible, .xr summary:focus-visible,
+.xr-scroll:focus-visible { outline: 2px solid var(--ring, var(--xr-primary)); outline-offset: 2px; }
+.xr input, .xr select { min-height: var(--xr-control); padding: 0 0.75rem;
+  border: 1px solid var(--field-border, var(--xr-input)); border-radius: var(--control-radius, 0.5rem);
+  background: var(--input-bg, var(--xr-bg)); color: var(--xr-text); font: inherit; font-size: 0.875rem; }
 .xr input { width: 100%; }
-.xr-fields { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 8px 12px; }
-.xr label { display: block; font-size: 13px; margin: 6px 0 2px; }
-.xr-actions { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 12px; }
+.xr-fields { display: grid; grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr)); gap: 0.75rem 1rem; }
+.xr label { display: block; font-size: 0.875rem; font-weight: 500; margin: 0 0 0.5rem; }
+.xr-toolbar { display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 0.5rem; }
+.xr-toolbar label { margin: 0; }
+.xr-actions { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-top: 1rem; }
+.xr-fund .xr-button { margin-top: 0.75rem; }
 .xr-list { list-style: none; padding: 0; margin: 0; }
-.xr-list li { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap;
-  padding: 8px 0; border-bottom: 1px solid var(--xr-line); }
+.xr-list li { display: flex; justify-content: space-between; align-items: center; gap: 0.75rem; flex-wrap: wrap;
+  padding: 0.75rem 0; border-bottom: 1px solid var(--xr-line); }
+.xr-list li:last-child { border-bottom: 0; }
 .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
-/* Phones: tables stack, each cell named by its data-label; the heatmap scrolls sideways instead. */
+/* Phones: cards get less padding; the matrix turns into one block per stock (name and total on top, then a line per
+   fund with its amount on the right, empty ones left out); the fund lists keep their three columns. */
 @media (max-width: 640px) {
-  .xr table:not(.xr-heat) thead { display: none; }
-  .xr table:not(.xr-heat) tr, .xr table:not(.xr-heat) td { display: block; }
-  .xr table:not(.xr-heat) td::before { content: attr(data-label) ": "; color: var(--xr-muted); }
-  .xr table:not(.xr-heat) tr { border-bottom: 1px solid var(--xr-line); padding: 4px 0; }
-  .xr table:not(.xr-heat) td { border: 0; padding: 2px 0; }
+  .xr { padding: 0.75rem; }
+  .xr-card { padding: 1rem; }
+  .xr h2 { font-size: 1rem; line-height: 1.5rem; }
+  .xr-figures { grid-template-columns: 1fr 1fr; }
+  .xr-matrix thead { display: none; }
+  .xr-matrix tr { display: grid; grid-template-columns: 1fr auto; column-gap: 0.75rem; padding: 0.75rem 0;
+    border-bottom: 1px solid var(--xr-line); }
+  .xr-matrix tbody tr:last-child { border-bottom: 0; }
+  .xr-matrix td { display: flex; justify-content: space-between; gap: 0.75rem; padding: 0.125rem 0; border: 0;
+    grid-column: 1 / -1; color: var(--xr-muted); font-size: 0.75rem; }
+  .xr-matrix td::before { content: attr(data-label); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .xr-matrix td.xr-name, .xr-matrix td.xr-total { grid-column: auto; color: var(--xr-text); font-size: 0.875rem;
+    font-weight: 600; padding-bottom: 0.25rem; }
+  .xr-matrix td.xr-name::before, .xr-matrix td.xr-total::before { content: none; }
+  .xr-matrix td.xr-name { display: block; grid-row: 1; }
+  .xr-matrix td.xr-total { grid-row: 1; grid-column: 2; }
+  .xr-matrix td.xr-empty { display: none; }
 }
-body { margin: 0; background: var(--background, var(--xr-fb-bg)); }
-.xr td:not(:first-child), .xr th:not(:first-child) { white-space: nowrap; }
