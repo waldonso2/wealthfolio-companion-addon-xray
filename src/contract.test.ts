@@ -22,6 +22,16 @@ async function store(opts: { schema?: number; parts?: Line[][]; hash?: string; g
   return { data, storage };
 }
 
+describe("sha256", () => {
+  it("matches the standard and Node's crypto without crypto.subtle (Wealthfolio's sandbox has none)", async () => {
+    const { createHash } = await import("node:crypto");
+    expect(await sha256("")).toBe("e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855");
+    expect(await sha256("abc")).toBe("ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad");
+    for (const text of ["x".repeat(55), "x".repeat(56), "x".repeat(64), 'Müller "AG" ' + "ä".repeat(500)])
+      expect(await sha256(text)).toBe(createHash("sha256").update(text, "utf8").digest("hex"));
+  });
+});
+
 describe("readStore", () => {
   it("reads a fund over several parts", async () => {
     const s = await readStore((await store()).storage);

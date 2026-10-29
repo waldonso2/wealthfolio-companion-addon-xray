@@ -1,7 +1,7 @@
 {
   "id": "broker-sync-xray",
   "name": "X-Ray",
-  "version": "3.11.0",
+  "version": "3.11.1",
   "description": "Durchschau deiner ETFs bis auf die einzelnen Aktien: Anteile, Überschneidungen und Klumpenrisiken – mit den Fondslisten, die der Broker-Sync-Dienst in Wealthfolio ablegt. Geht nicht ins Netz.",
   "author": "waldonso2",
   "main": "dist/addon.js",
