@@ -34,7 +34,7 @@ jobs:
       - run: pnpm type-check
       - run: pnpm lint
       - run: pnpm test:coverage
-      - run: pnpm build
+      - run: pnpm bundle
       # Known vulnerabilities in what ships (dependencies, not dev tools).
       - run: pnpm audit --prod
       # Every page of the built app in Chromium: axe, CSP, phone width.
@@ -43,3 +43,17 @@ jobs:
       # Measured and reported on the run's summary page (KENNZAHLEN.md), never failing the build.
       - run: pnpm perf
         continue-on-error: true
+
+  contract:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - name: the data contract matches the broker sync service's (leading) copy (contract/xray/README.md)
+        run: |
+          base=https://raw.githubusercontent.com/waldonso2/wealthfolio-broker-sync-service/main/contract/xray
+          for f in cases.json README.md; do
+            curl -fsSL "$base/$f" -o "/tmp/$f"
+            diff -u "/tmp/$f" "contract/xray/$f" || { echo "::error::contract/xray/$f differs from the service's copy - copy it from there."; exit 1; }
+          done

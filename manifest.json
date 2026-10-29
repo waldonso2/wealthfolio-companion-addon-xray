@@ -1,0 +1,42 @@
+{
+  "id": "broker-sync-xray",
+  "name": "X-Ray",
+  "version": "3.11.0",
+  "description": "Durchschau deiner ETFs bis auf die einzelnen Aktien: Anteile, Überschneidungen und Klumpenrisiken – mit den Fondslisten, die der Broker-Sync-Dienst in Wealthfolio ablegt. Geht nicht ins Netz.",
+  "author": "waldonso2",
+  "main": "dist/addon.js",
+  "sdkVersion": "3.11.0",
+  "minWealthfolioVersion": "3.11.0",
+  "enabled": true,
+  "hostDependencies": {
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0"
+  },
+  "contributes": {
+    "routes": [{ "id": "broker-sync-xray" }],
+    "links": { "sidebar": [{ "route": "broker-sync-xray", "label": "X-Ray", "icon": "chart-pie", "order": 110 }] }
+  },
+  "permissions": [
+    {
+      "category": "accounts",
+      "functions": [{ "name": "getAll", "isDeclared": true, "isDetected": false }],
+      "purpose": "Konten lesen, um ihre Positionen zu lesen"
+    },
+    {
+      "category": "portfolio",
+      "functions": [{ "name": "getHoldings", "isDeclared": true, "isDetected": false }],
+      "purpose": "Werte der Positionen für die Durchschau lesen"
+    },
+    {
+      "category": "ui",
+      "functions": [
+        { "name": "sidebar.addItem", "isDeclared": true, "isDetected": false },
+        { "name": "router.add", "isDeclared": true, "isDetected": false },
+        { "name": "onDisable", "isDeclared": true, "isDetected": false }
+      ],
+      "purpose": "Seite X-Ray in der Seitenleiste"
+    }
+  ],
+  "keywords": ["x-ray", "etf", "look-through", "klumpenrisiko"],
+  "license": "MIT"
+}
