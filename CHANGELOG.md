@@ -1,5 +1,10 @@
 # Changelog
 
+## 3.12.0
+
+- Built for Wealthfolio 3.12 (`sdkVersion` and `minWealthfolioVersion` 3.12.0, like the other addon). The addon uses no SDK package, only the host's API and its own storage, so nothing in the code changes; it needs Wealthfolio 3.12 or newer now.
+- Dependencies: react and react-dom 19.3.1, vite 8.3.5, jsdom 30.1.3, @axe-core/playwright 4.14.0 and zod (a high advisory, `pnpm audit --fix=update`). `pnpm audit --prod` is clean. One moderate advisory (minimatch below `typescript-eslint`) has no fixed version yet. CodeQL's actions at 4.39.1.
+
 ## 3.11.3
 
 - The broker sync service is now called Wealthfolio Companion: the texts, README and links name it so (its repository is `waldonso2/wealthfolio-companion`). The storage it writes is the same, nothing to do.

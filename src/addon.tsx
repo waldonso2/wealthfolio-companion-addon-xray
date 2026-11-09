@@ -1,4 +1,4 @@
-// Entry of the addon (Wealthfolio ≥ 3.11): a sidebar item and one route whose component the host mounts in its own
+// Entry of the addon (Wealthfolio ≥ 3.12): a sidebar item and one route whose component the host mounts in its own
 // React root. The SDK is not bundled: ctx is typed by what is used (structural, see Ctx).
 import type { ComponentType } from "react";
 import type { Storage } from "./contract";
