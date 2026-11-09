@@ -1,7 +1,7 @@
 {
   "name": "wealthfolio-companion-addon-xray",
   "private": true,
-  "version": "3.11.3",
+  "version": "3.12.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -16,11 +16,11 @@
     "perf": "playwright test --config playwright.perf.config.ts"
   },
   "dependencies": {
-    "react": "^19.3.0",
-    "react-dom": "^19.3.0"
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1"
   },
   "devDependencies": {
-    "@axe-core/playwright": "^4.13.0",
+    "@axe-core/playwright": "^4.14.0",
     "@eslint/js": "^9.39.5",
     "@playwright/test": "^1.64.0",
     "@testing-library/react": "^16.3.3",
@@ -34,10 +34,10 @@
     "eslint-plugin-jsx-a11y": "^6.10.2",
     "eslint-plugin-react-hooks": "^7.1.1",
     "globals": "^17.13.0",
-    "jsdom": "^30.1.2",
+    "jsdom": "^30.1.3",
     "typescript": "^6.0.3",
     "typescript-eslint": "^8.71.1",
-    "vite": "^8.3.4",
+    "vite": "^8.3.5",
     "vitest": "^5.0.3"
   },
   "description": "X-Ray for Wealthfolio: ETF look-through with the funds' lists Wealthfolio Companion stores",

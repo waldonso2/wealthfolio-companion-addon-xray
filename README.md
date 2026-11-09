@@ -13,7 +13,7 @@ flowchart LR
 
 ## Installation
 
-1. Wealthfolio **3.11** oder neuer.
+1. Wealthfolio **3.12** oder neuer.
 2. In Wealthfolio Companion auf der Seite *Dienste* **X-Ray in Wealthfolio** einschalten. Nach dem nächsten Abruf liegen die Listen in Wealthfolio.
 3. Die Datei `wealthfolio-companion-addon-xray.zip` aus dem [neuesten Release](https://github.com/waldonso2/wealthfolio-companion-addon-xray/releases/latest) laden und in Wealthfolio unter *Einstellungen → Add-ons → Install from File* installieren.
 
